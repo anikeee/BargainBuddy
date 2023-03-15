@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Container, Grid } from '@mui/material';
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import SearchBar from './components/SearchBar';
+import TodayDeals from './components/TodayDeals';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <>
+        <Navbar />
+        <Container maxWidth="lg" sx={{ marginTop: 2 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={3}>
+              <Sidebar />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <SearchBar />
+              {/* Add the main content for products here */}
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <TodayDeals />
+            </Grid>
+          </Grid>
+        </Container>
+      </>
   );
 }
 
