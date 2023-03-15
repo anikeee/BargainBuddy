@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProductDetails } from '../product/amazonApi';
+import { getProductDetails } from '../product/AmazonApi';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
 
 const MainContent = () => {
