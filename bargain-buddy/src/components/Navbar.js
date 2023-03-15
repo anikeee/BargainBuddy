@@ -1,17 +1,17 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton } from '@mui/material';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { AppBar, Toolbar, Typography, Box } from '@mui/material';
+import LoginButton from './LoginButton';
 
 const Navbar = () => {
     return (
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="h6" sx={{ flexGrow: 1 }}>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     BargainBuddy
                 </Typography>
-                <IconButton color="inherit">
-                    <ShoppingCartIcon />
-                </IconButton>
+                <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
+                    <LoginButton />
+                </Box>
             </Toolbar>
         </AppBar>
     );
