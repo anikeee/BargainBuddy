@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Grid } from '@mui/material';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -7,6 +7,12 @@ import TodayDeals from './components/TodayDeals';
 import MainContent from './components/MainContent';
 
 function App() {
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearch = (query) => {
+        setSearchQuery(query);
+    };
+
     return (
         <>
             <Navbar />
@@ -16,8 +22,8 @@ function App() {
                         <Sidebar />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <SearchBar />
-                        <MainContent />
+                        <SearchBar onSearch={handleSearch} />
+                        <MainContent searchQuery={searchQuery} />
                     </Grid>
                     <Grid item xs={12} sm={3}>
                         <TodayDeals />
