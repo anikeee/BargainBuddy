@@ -28,7 +28,13 @@ const MainContent = () => {
                             {productData.title}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Price: {productData.price}
+                            Price: {productData.price.symbol}{productData.price.current_price}
+                            {productData.price.discounted && (
+                                <span>
+                  {' '}
+                                    (Before: {productData.price.symbol}{productData.price.before_price} Save {productData.price.savings_amount} - {productData.price.savings_percent}%)
+                </span>
+                            )}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             Description: {productData.description}
