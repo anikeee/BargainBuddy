@@ -1,6 +1,7 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography, Box } from '@mui/material';
+import { AppBar, Toolbar, Typography, Box, IconButton } from '@mui/material';
 import LoginButton from './LoginButton';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Navbar = () => {
     return (
@@ -12,6 +13,9 @@ const Navbar = () => {
                 <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%' }}>
                     <LoginButton />
                 </Box>
+                <IconButton color="inherit">
+                    <ShoppingCartIcon />
+                </IconButton>
             </Toolbar>
         </AppBar>
     );
