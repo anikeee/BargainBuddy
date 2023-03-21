@@ -3,6 +3,8 @@ import { Button, Dialog, DialogTitle, DialogContent, TextField, DialogActions } 
 
 const LoginButton = () => {
     const [open, setOpen] = useState(false);
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -10,6 +12,14 @@ const LoginButton = () => {
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleLogin = () => {
+        localStorage.setItem('username', username);
+        localStorage.setItem('email', email);
+        // Send email via Mailchimp (handled in backend)
+        // ...
+        handleClose();
     };
 
     return (
@@ -28,6 +38,8 @@ const LoginButton = () => {
                         type="text"
                         fullWidth
                         variant="standard"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                     <TextField
                         margin="dense"
@@ -36,11 +48,13 @@ const LoginButton = () => {
                         type="email"
                         fullWidth
                         variant="standard"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose}>Cancel</Button>
-                    <Button onClick={handleClose}>Login</Button>
+                    <Button onClick={handleLogin}>Login</Button>
                 </DialogActions>
             </Dialog>
         </div>
