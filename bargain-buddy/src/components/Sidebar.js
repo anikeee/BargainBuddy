@@ -1,18 +1,27 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton"; 
-import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
 
-export default function Sidebar({state, setState, toggleDrawer}) {
+const departaments = [
+  "Books",
+  "Films, TV, Music & Games",
+  "Electronics & Computers",
+  "Home, Gerden, Pets, & DIY",
+  "Toys, Children & Baby",
+  "Clothes, Shoes, Jewellery and Accessories",
+  "Sports & Outdoors",
+  "Food & Grocery",
+  "Health & Beauty",
+  "Car & Motorbike",
+  "Business, Industry & Science",
+];
 
+export default function Sidebar({ state, setState, toggleDrawer }) {
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
@@ -21,12 +30,9 @@ export default function Sidebar({state, setState, toggleDrawer}) {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {["Best Deals", "Most Popular", "Watch list"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
@@ -34,12 +40,10 @@ export default function Sidebar({state, setState, toggleDrawer}) {
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
+        <ListItem><h3>Shop By Departament</h3></ListItem>
+        {departaments.map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
@@ -63,4 +67,4 @@ export default function Sidebar({state, setState, toggleDrawer}) {
       ))}
     </div>
   );
-};
+}
