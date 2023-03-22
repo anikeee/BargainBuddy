@@ -95,27 +95,44 @@ const MainContent = ({ searchQuery }) => {
                 <Grid container spacing={2}>
                     {currentProducts.map((product, index) => (
                         <Grid item xs={12} sm={6} md={4} key={index}>
-                            <Card>
+                            <Card
+                                sx={{
+                                    height: "100%",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                }}
+                            >
                                 <CardMedia
                                     component="img"
                                     height="140"
                                     image={product.img}
                                     alt={product.title}
                                 />
-                                <CardContent>
+                                <CardContent sx={{ flexGrow: 1 }}>
                                     <IconButton
                                         edge="end"
                                         color="inherit"
                                         onClick={() => toggleLovedItem(product)}
                                     >
-                                        <FavoriteIcon
-                                            sx={{ color: isLoved(product) ? "red" : "inherit" }}
-                                        />
+                                        <FavoriteIcon sx={{ color: isLoved(product) ? "red" : "inherit" }} />
                                     </IconButton>
-                                    <Typography gutterBottom variant="h5" component="div">
+                                    <Typography gutterBottom variant="h5" component="div" sx={{ color: "#007BFF" }}>
                                         {product.shop}
                                     </Typography>
-                                    <Typography gutterBottom variant="h6" component="div">
+                                    <Typography
+                                        gutterBottom
+                                        variant="h6"
+                                        component="div"
+                                        sx={{
+                                            display: "-webkit-box",
+                                            WebkitLineClamp: 2,
+                                            WebkitBoxOrient: "vertical",
+                                            overflow: "hidden",
+                                            textOverflow: "ellipsis",
+                                            cursor: "default",
+                                        }}
+                                        title={product.title}
+                                    >
                                         {product.title}
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">

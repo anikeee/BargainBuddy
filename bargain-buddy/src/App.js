@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Grid } from '@mui/material';
 import Navbar from './components/Navbar';
 import SearchBar from './components/SearchBar';
-import TodayDeals from './components/TodayDeals';
+// import TodayDeals from './components/TodayDeals';
 import MainContent from './components/MainContent';
 
 function App() {
@@ -24,9 +24,7 @@ function App() {
                         <SearchBar onSearch={handleSearch} />
                         <MainContent searchQuery={searchQuery} />
                     </Grid>
-                    <Grid item xs={12} sm={3}>
-                        <TodayDeals />
-                    </Grid>
+
                 </Grid>
             </Container>
         </>
