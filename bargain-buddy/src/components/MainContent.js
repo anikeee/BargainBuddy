@@ -72,6 +72,11 @@ const MainContent = ({ searchQuery }) => {
         }
     };
 
+
+    const isLoved = (product) => {
+        return lovedItems.some((item) => item.link === product.link);
+    };
+
     const renderProducts = () => {
         if (!productData) {
             return <Typography variant="h6">Please enter a search query.</Typography>;
@@ -103,9 +108,14 @@ const MainContent = ({ searchQuery }) => {
                                         color="inherit"
                                         onClick={() => toggleLovedItem(product)}
                                     >
-                                        <FavoriteIcon />
+                                        <FavoriteIcon
+                                            sx={{ color: isLoved(product) ? "red" : "inherit" }}
+                                        />
                                     </IconButton>
                                     <Typography gutterBottom variant="h5" component="div">
+                                        {product.shop}
+                                    </Typography>
+                                    <Typography gutterBottom variant="h6" component="div">
                                         {product.title}
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
