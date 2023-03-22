@@ -1,14 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { getProductDetails } from '../product/AmazonApi';
-import { Card, CardContent, CardMedia, Typography } from '@mui/material';
+// MainContent.js
+
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardMedia, Typography, Grid } from "@mui/material";
+import Pagination from "@mui/lab/Pagination";
+import axios from "axios";
 
 const MainContent = ({ searchQuery }) => {
     const [productData, setProductData] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+    const fetchProductData = async (query) => {
+        const options = {
+            method: "GET",
+            url: "https://pricer.p.rapidapi.com/str",
+            params: { q: query },
+            headers: {
+                "X-RapidAPI-Key": "6e3bc1d031msh5140980f27995c8p1559e5jsn6a707fc97c99",
+                "X-RapidAPI-Host": "pricer.p.rapidapi.com",
+            },
+        };
+
+        try {
+            const response = await axios.request(options);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    };
 
     useEffect(() => {
         const fetchData = async () => {
             if (searchQuery) {
-                const data = await getProductDetails(searchQuery, 'US');
+                const data = await fetchProductData(searchQuery);
                 setProductData(data);
             } else {
                 setProductData(null);
@@ -17,39 +42,61 @@ const MainContent = ({ searchQuery }) => {
         fetchData();
     }, [searchQuery]);
 
-    return (
-        <>
-            {productData ? (
-                <Card>
-                    {/*<CardMedia*/}
-                    {/*    component="img"*/}
-                    {/*    height="140"*/}
-                    {/*    image={productData.image}*/}
-                    {/*    alt={productData.title}*/}
-                    {/*/>*/}
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {productData.title}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            Price: {productData.price.symbol}{productData.price.current_price}
-                            {productData.price.discounted && (
-                                <span>
-                  {' '}
-                                    (Before: {productData.price.symbol}{productData.price.before_price} Save {productData.price.savings_amount} - {productData.price.savings_percent}%)
-                </span>
-                            )}
-                        </Typography>
-                        {/*<Typography variant="body2" color="text.secondary">*/}
-                        {/*    Description: {productData.description}*/}
-                        {/*</Typography>*/}
-                    </CardContent>
-                </Card>
-            ) : (
-                <Typography variant="h6">{searchQuery ? 'Product not found...' : 'Please enter a search query.'}</Typography>
-            )}
-        </>
-    );
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+
+    const renderProducts = () => {
+        if (!productData) {
+            return <Typography variant="h6">Please enter a search query.</Typography>;
+        }
+
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const currentProducts = productData.slice(startIndex, endIndex);
+
+        if (currentProducts.length === 0) {
+            return <Typography variant="h6">Product not found...</Typography>;
+        }
+
+        return (
+            <>
+                <Grid container spacing={2}>
+                    {currentProducts.map((product, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={index}>
+                            <Card>
+                                <CardMedia
+                                    component="img"
+                                    height="140"
+                                    image={product.img}
+                                    alt={product.title}
+                                />
+                                <CardContent>
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        {product.shop}
+                                    </Typography>
+                                    <Typography gutterBottom variant="h6" component="div">
+                                        {product.title}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        Price: {product.price}
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
+                <Pagination
+                    count={Math.ceil(productData.length / itemsPerPage)}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    sx={{ mt: 4 }}
+                />
+            </>
+        );
+    };
+
+    return <>{renderProducts()}</>;
 };
 
 export default MainContent;
