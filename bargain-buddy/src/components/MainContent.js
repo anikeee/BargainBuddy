@@ -1,14 +1,24 @@
-// MainContent.js
-
 import React, { useEffect, useState } from "react";
-import { Card, CardContent, CardMedia, Typography, Grid } from "@mui/material";
+import {
+    Card,
+    CardContent,
+    CardMedia,
+    Typography,
+    Grid,
+    IconButton,
+} from "@mui/material";
 import Pagination from "@mui/lab/Pagination";
 import axios from "axios";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const MainContent = ({ searchQuery }) => {
     const [productData, setProductData] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const itemsPerPage = 6;
+    const [lovedItems, setLovedItems] = useState(() => {
+        const storedLovedItems = localStorage.getItem("lovedItems");
+        return storedLovedItems ? JSON.parse(storedLovedItems) : [];
+    });
 
     const fetchProductData = async (query) => {
         const options = {
@@ -46,9 +56,25 @@ const MainContent = ({ searchQuery }) => {
         setCurrentPage(value);
     };
 
+    const toggleLovedItem = (product) => {
+        const isLoved = lovedItems.some((item) => item.link === product.link);
+
+        if (isLoved) {
+            const newLovedItems = lovedItems.filter(
+                (item) => item.link !== product.link
+            );
+            setLovedItems(newLovedItems);
+            localStorage.setItem("lovedItems", JSON.stringify(newLovedItems));
+        } else {
+            const newLovedItems = [...lovedItems, product];
+            setLovedItems(newLovedItems);
+            localStorage.setItem("lovedItems", JSON.stringify(newLovedItems));
+        }
+    };
+
     const renderProducts = () => {
         if (!productData) {
-            return <Typography variant="h6">Please enter your product name</Typography>;
+            return <Typography variant="h6">Please enter a search query.</Typography>;
         }
 
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -72,10 +98,14 @@ const MainContent = ({ searchQuery }) => {
                                     alt={product.title}
                                 />
                                 <CardContent>
+                                    <IconButton
+                                        edge="end"
+                                        color="inherit"
+                                        onClick={() => toggleLovedItem(product)}
+                                    >
+                                        <FavoriteIcon />
+                                    </IconButton>
                                     <Typography gutterBottom variant="h5" component="div">
-                                        {product.shop}
-                                    </Typography>
-                                    <Typography gutterBottom variant="h6" component="div">
                                         {product.title}
                                     </Typography>
                                     <Typography variant="body2" color="text.secondary">
