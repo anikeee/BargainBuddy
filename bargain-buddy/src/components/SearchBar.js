@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { InputBase, Paper } from '@mui/material';
-import SearchIcon from '@mui/icons-material/Search';
+import React, { useState } from "react";
+import { InputBase, Paper } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 const SearchBar = ({ onSearch }) => {
-    const [inputValue, setInputValue] = useState('');
+    const [inputValue, setInputValue] = useState("");
 
     const handleChange = (event) => {
         setInputValue(event.target.value);
@@ -19,10 +19,10 @@ const SearchBar = ({ onSearch }) => {
             component="form"
             onSubmit={handleSubmit}
             sx={{
-                display: 'flex',
-                alignItems: 'center',
-                width: '100%',
-                marginBottom: 2
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+                marginBottom: 2,
             }}
         >
             <InputBase
@@ -30,7 +30,7 @@ const SearchBar = ({ onSearch }) => {
                 onChange={handleChange}
                 sx={{
                     marginLeft: 1,
-                    flex: 1
+                    flex: 1,
                 }}
                 placeholder="Search…"
             />
