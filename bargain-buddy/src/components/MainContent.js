@@ -87,7 +87,7 @@ const MainContent = ({ searchQuery }) => {
 
     const renderProducts = () => {
         if (!productData) {
-            return <Typography variant="h6">Please enter a search query.</Typography>;
+            return <Typography variant="h6">Please enter the product name</Typography>;
         }
 
         const startIndex = (currentPage - 1) * itemsPerPage;
