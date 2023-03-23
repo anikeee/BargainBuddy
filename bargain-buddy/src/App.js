@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Container, Grid } from '@mui/material';
 import Navbar from './components/Navbar';
 import SearchBar from './components/SearchBar';
-import TodayDeals from './components/TodayDeals';
 import MainContent from './components/MainContent';
 
 function App() {
@@ -18,15 +17,13 @@ function App() {
             <Container maxWidth="lg" sx={{ marginTop: 2 }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={3}>
-                        
+
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <SearchBar onSearch={handleSearch} />
                         <MainContent searchQuery={searchQuery} />
                     </Grid>
-                    <Grid item xs={12} sm={3}>
-                        <TodayDeals />
-                    </Grid>
+
                 </Grid>
             </Container>
         </>
