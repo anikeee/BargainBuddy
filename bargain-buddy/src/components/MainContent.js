@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import TodayDeals from './TodayDeals';
 import {
     Card,
     CardContent,
@@ -77,6 +78,13 @@ const MainContent = ({ searchQuery }) => {
         return lovedItems.some((item) => item.link === product.link);
     };
 
+    const removeLovedItem = (index) => {
+        const newLovedItems = [...lovedItems];
+        newLovedItems.splice(index, 1);
+        setLovedItems(newLovedItems);
+        localStorage.setItem('lovedItems', JSON.stringify(newLovedItems));
+    };
+
     const renderProducts = () => {
         if (!productData) {
             return <Typography variant="h6">Please enter a search query.</Typography>;
@@ -91,65 +99,77 @@ const MainContent = ({ searchQuery }) => {
         }
 
         return (
-            <>
-                <Grid container spacing={2}>
-                    {currentProducts.map((product, index) => (
-                        <Grid item xs={12} sm={6} md={4} key={index}>
-                            <Card
-                                sx={{
-                                    height: "100%",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                }}
-                            >
-                                <CardMedia
-                                    component="img"
-                                    height="140"
-                                    image={product.img}
-                                    alt={product.title}
-                                />
-                                <CardContent sx={{ flexGrow: 1 }}>
-                                    <IconButton
-                                        edge="end"
-                                        color="inherit"
-                                        onClick={() => toggleLovedItem(product)}
-                                    >
-                                        <FavoriteIcon sx={{ color: isLoved(product) ? "red" : "inherit" }} />
-                                    </IconButton>
-                                    <Typography gutterBottom variant="h5" component="div" sx={{ color: "#007BFF" }}>
-                                        {product.shop}
-                                    </Typography>
-                                    <Typography
-                                        gutterBottom
-                                        variant="h6"
-                                        component="div"
-                                        sx={{
-                                            display: "-webkit-box",
-                                            WebkitLineClamp: 2,
-                                            WebkitBoxOrient: "vertical",
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            cursor: "default",
-                                        }}
-                                        title={product.title}
-                                    >
-                                        {product.title}
-                                    </Typography>
-                                    <Typography variant="body2" color="text.secondary">
-                                        Price: {product.price}
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
+            <Grid container spacing={2}>
+                <Grid item xs={12} md={8}>
+                    <Grid container spacing={2}>
+                        {currentProducts.map((product, index) => (
+                            <Grid item xs={12} sm={6} md={6} key={index}>
+                                <Card
+                                    sx={{
+                                        height: '100%',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                    }}
+                                >
+                                    <CardMedia
+                                        component="img"
+                                        height="140"
+                                        image={product.img}
+                                        alt={product.title}
+                                    />
+                                    <CardContent sx={{ flexGrow: 1 }}>
+                                        <IconButton
+                                            edge="end"
+                                            color="inherit"
+                                            onClick={() => toggleLovedItem(product)}
+                                        >
+                                            <FavoriteIcon
+                                                sx={{ color: isLoved(product) ? 'red' : 'inherit' }}
+                                            />
+                                        </IconButton>
+                                        <Typography
+                                            gutterBottom
+                                            variant="h5"
+                                            component="div"
+                                            sx={{ color: '#007BFF' }}
+                                        >
+                                            {product.shop}
+                                        </Typography>
+                                        <Typography
+                                            gutterBottom
+                                            variant="h6"
+                                            component="div"
+                                            sx={{
+                                                display: '-webkit-box',
+                                                WebkitLineClamp: 2,
+                                                WebkitBoxOrient: 'vertical',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                                cursor: 'default',
+                                            }}
+                                            title={product.title}
+                                        >
+                                            {product.title}
+                                        </Typography>
+                                        <Typography variant="body2" color="text.secondary">
+                                            Price: {product.price}
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </Grid>
+                    <Pagination
+                        count={Math.ceil(productData.length / itemsPerPage)}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                        sx={{ mt: 4 }}
+                    />
                 </Grid>
-                <Pagination
-                    count={Math.ceil(productData.length / itemsPerPage)}
-                    page={currentPage}
-                    onChange={handlePageChange}
-                    sx={{ mt: 4 }}
-                />
-            </>
+                <Grid item xs={12} sm={12} md={4}>
+                    <TodayDeals lovedItems={lovedItems} removeLovedItem={removeLovedItem} />
+                </Grid>
+            </Grid>
         );
     };
 

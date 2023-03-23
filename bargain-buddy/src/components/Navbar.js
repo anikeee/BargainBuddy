@@ -4,6 +4,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import LoginButton from "./LoginButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Sidebar from "./Sidebar";
+import SavedItems from "./SavedItems";
 
 const Navbar = ({ onDepartmentSearch }) => {
   const [drawerState, setDrawerState] = useState({
